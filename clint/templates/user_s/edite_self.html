@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>اصلاح کاربر</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+
+	<!-- STYLES -->
+	<link rel="stylesheet" href="../../static/theme/css/bootstrap.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="../../static/theme/css/all.min.css" type="text/css" media="all">
+	<link rel="stylesheet" href="../../static/theme/css/slick.css" type="text/css" media="all">
+	<link rel="stylesheet" href="../../static/theme/css/simple-line-icons.css" type="text/css" media="all">
+	<link rel="stylesheet" href="../../static/theme/css/style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="../../static/theme/css/vazir-font.css" type="text/css" media="all">
+
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        <style>
+            .content-button {
+                background-color: #3a6df0;
+                border: none;
+                padding: 8px 26px;
+                color: #fff;
+                border-radius: 20px;
+                margin-top: 16px;
+                cursor: pointer;
+                transition: 0.3s;
+                white-space: nowrap;
+            }
+        </style>
+</head>
+
+<body>
+
+<!-- preloader -->
+<div id="preloader">
+	<div class="book">
+		<div class="inner">
+			<div class="left"></div>
+			<div class="middle"></div>
+			<div class="right"></div>
+		</div>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</div>
+
+<!-- site wrapper -->
+<div class="site-wrapper">
+
+	<div class="main-overlay"></div>
+
+	<!-- header -->
+	<header class="header-classic">
+
+			<div class="container-xl">
+				<!-- header top -->
+				<div class="header-top">
+					<div class="row align-items-center">
+
+						<div class="col-md-4 col-xs-12">
+							<!-- site logo -->
+							<a class="navbar-brand" href="/index">پورتال </a>
+						</div>
+
+						<div class="col-md-8 d-none d-md-block">
+							<!-- social icons -->
+							<!-- <ul class="social-icons list-unstyled list-inline mb-0 float-end">
+								<li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="fab fa-medium"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+							</ul> -->
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<nav class="navbar navbar-expand-lg">
+				<!-- header bottom -->
+				<div class="header-bottom  w-100">
+					
+					<div class="container-xl">
+						<div class="d-flex align-items-center">
+							<div class="collapse navbar-collapse flex-grow-1">
+								<!-- menus -->
+								<ul class="navbar-nav">
+                                    <li class="nav-item active">
+										<a class="nav-link" href="/">صفحه اصلی</a>
+									</li>
+									<li class="nav-item dropdown ">
+										<a class="nav-link dropdown-toggle" href="index.html">معاونت ها</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="/notif/0">اداره کل</a></li>
+											{%for mo in moavenats %}
+											<li><a class="dropdown-item" href="/notif/{{mo}}">{{mo}}</a></li>
+											{%endfor%}
+										</ul>
+									</li>
+
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="/post/index/all/1">آگهی</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="/post/index/all/1">آگهی ها</a></li>
+											<li><a class="dropdown-item" href="/post/index/username/{{user['username']}}/1">آگهی های من</a></li>
+											<li><a class="dropdown-item" href="/post/create">نوشتن آگهی</a></li>
+										</ul>
+									</li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/form/archive/index/all/all/1">فرم ها</a>
+                                        </li>
+									<li class="nav-item">
+										<a class="nav-link" href="">لینک ها</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="about.html">درباره ما</a>
+									</li>
+								</ul>
+							</div>
+
+							<!-- header buttons -->
+							<div class="header-buttons">
+								<button class="search icon-button">
+									<i class="icon-magnifier"></i>
+								</button>
+								<button  class="burger-menu icon-button ms-2 float-end float-lg-none">
+									<span class="burger-icon"></span>
+								</button>
+                                <a href="/logout" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="خروج" class="icon-button ms-2 float-end float-lg-none">
+                                    <span class="fa fa-share-square"></span>
+                                </a>
+                                <a href="/user_s/edite/self" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="ویرایش اطلاعات کاربر" class="icon-button-lg ms-2 float-end float-lg-none">
+                                    <span style="padding-top: 3px;padding-left: 3px;">{{ user_data["username"] }} - </span><span class="fa fa-user"></span>
+                                </a>
+                                <script>
+                                    const tooltipTriggerList=[].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                                    tooltipTriggerList.map(function (tooltipTriggerE1){
+                                        return new bootstrap.Tooltip(tooltipTriggerE1)
+                                    })
+                                </script>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</nav>
+
+	</header>
+
+    <section class="hero-carousel">
+        <div class="container-xl">
+            <div class="post-carousel-lg">
+                <!-- post -->
+			{% for notif_im in main_notif_list_important %}
+                <div class="post featured-post-xl">
+                    <div class="details clearfix">
+                        <a href="/notif/{{notif_im['moavenat']}}" class="category-badge lg">{%if notif_im["moavenat"]=="0" %}  اداره کل  {%else%}  {{notif_im["moavenat"]}} {%endif%}</a>
+                        <h4 class="post-title"><a href="/notif/single/{{notif_im['_id']}}">{{notif_im["title"]}}</a></h4>
+                        <ul class="meta list-inline mb-0">
+							{% if notif_im["like"] == True %}
+                             <i style="padding-right: 0.5rem;" class='fa fa-heart'></i> </i> {{notif_im["count_like"]}}</li>
+						
+							{%endif%}
+                            {% if notif_im["comment"] == True %}
+                            <i style="padding-right: 0.5rem;" class='fa fa-comments'></i> </i> {{notif_im["count_comment"]}}</li>
+
+							{%endif%}
+                        </ul>
+                    </div>
+                    <a href="/notif/single/{{notif_im['_id']}}">
+                        <div class="thumb rounded">
+                            <div class="inner data-bg-image" data-bg-image="/static/notif_img/{{notif_im['img']}}"></div>
+                        </div>
+                    </a>
+                </div>
+			{%endfor%}
+
+            </div>
+        </div>
+    </section>
+
+	<!-- section main content -->
+	<section class="main-content">
+		<div class="container-xl">
+
+			<div class="row gy-4">
+				<div class="col-lg-8">
+					
+					{%if (status == "ok")%}         
+					<div class="alert alert-success" dir="rtl">
+						<strong>تایید ! </strong>ثبت با موفقیت انجام شد.
+					</div>
+					{%endif%}
+					{%if (status == "false")%}
+					<div class="alert alert-danger" dir="rtl">
+						<strong>خطا ! </strong>در صورت بروز خطای مجدد به ادمین سیستم اطلاع دهید با تشکر.
+					</div>
+					{%endif%}
+
+					<div class="container mt-5">
+						
+
+                        <form action="/user_s/edite/self" method="POST" enctype="multipart/form-data">
+                            <input name="id" class="form-control" value="{{user['_id']}}" type="hidden"/>
+                
+                            <div class="form-group">
+                                <label asp-for="username" class="control-label"> نام کاربری</label>
+                                <br>
+                                <input name="username" class="form-control" value="{{user['username']}}" readonly/>
+                            </div>
+                            <div class="form-group">
+                               <label asp-for="name" class="control-label">نام</label>
+                               <br>
+                               <input name="name" class="form-control"  value="{{user['name']}}" readonly/>
+                           </div>
+                            <div class="form-group">
+                                <label asp-for="password" class="control-label">رمز عبور </label>
+                                <br>
+                                <input name="password" class="form-control"  placeholder="*********"/>
+                                <span asp-validation-for="password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="type_user" class="control-label">سطح دسترسی</label>
+                                <br>
+                                <input name="type_user" type="hidden" class="form-control" value="{{user['type_user']}}" readonly/>
+                                <span asp-validation-for="type_user" class="text-danger"></span>
+                            </div>
+                            <div class="alert alert-warning" dir="rtl">
+                               <strong>اخطار ! </strong>در صورت بارگذاری عکس یا پیوست جدید فایل قبلی پاک خواهد شد.
+                           </div>
+                           <div class="thumb">
+                            <img style="border-radius: 100%;max-width:150px;max-height:150px;" src="../../static/user_img/{{user['img']}}" alt="کاتن"/>
+                        </div>
+                            <div class="form-group">
+                            <label asp-for="img_upload" class="control-label">تصویر</label>
+                            <br>
+                            <input type="file" name="img_upload" class="form-control"/>
+                            </div>
+                
+                            <button class="content-button"> اصلاح کاربر</button>
+                
+                
+                
+                
+                            
+                        </form>
+                        
+
+					  </div>
+
+					
+
+				</div>
+
+				<div class="col-lg-4">
+
+                    <!-- sidebar -->
+                    <div class="sidebar">
+                        <!-- widget about -->
+                        <div class="widget rounded">
+                            <div class="widget-about data-bg-image text-center" data-bg-image="images/map-bg.png">
+                                <!-- <img src="../../static/theme/images/logo.svg" alt="logo" class="mb-4"/> -->
+                                مقام معظم رهبری
+                                <p class="mb-4">اگر حادثه کربلا و اسوه گیری از آن نبود، انقلاب اسلامی ایران پیروز نمیشد.
+                                    <br>
+                                    1404/3/26
+                                </p>
+                                    <ul class="social-icons list-unstyled list-inline mb-0">
+                                        <li class="list-inline-item"><a href="http://sql:55/c.aspx" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="شماره تماس همکاران" ><i class="fa fa-address-book"></i></a></li>
+                                        <li class="list-inline-item"><a href="https://www.ibank.net/Login" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="بانک امین" ><i class="fa fa-university"></i></a></li>
+                                        <li class="list-inline-item"><a href="" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="لینکها" ><i class="fa fa-server"></i></a></li>
+                                        <li class="list-inline-item"><a href="https://www.874.net/" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="صفحه من" ><i class="fa fa-id-card"></i></a></li>
+                                        <li class="list-inline-item"><a href="https://www.agah.net/" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="آگاه" ><i class="fa fa-camera-retro"></i></a></li>
+                                        <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li> -->
+                                    </ul>
+                            </div>
+                        </div>
+
+                        
+                        <!--  مطالب مهم -->
+                        <div class="widget rounded">
+                            <div class="widget-header text-center">
+                                <h3 class="widget-title">مطالب مهم</h3>
+                                <img src="../../static/theme/images/wave.svg" class="wave" alt="wave"/>
+                            </div>
+                            <div class="widget-content">
+                                <div class="post-carousel-widget">
+                                    <!-- post -->
+                                    
+                                {%for item in  main_notif_list_admin %}
+                                    <div class="post post-carousel">
+                                        <div class="thumb rounded">
+                                            <a href="/notif/{{item['moavenat']}}" class="category-badge position-absolute">{%if item["moavenat"]=="0" %}  اداره کل  {%else%}  {{item["moavenat"]}} {%endif%} </a>
+                                            <a href="/notif/single/{{item['_id']}}">
+                                                <div class="inner">
+                                                    {% if item['img'].endswith(('.mp4','.webm','.ogg')) %}
+                                                    <!-- <img src="/static/notif_img/{{item['img']}}" alt="post-title"/> -->
+                                                    <img src="/static/notif_img/default_video.jpg" alt="post-title"/>
+                                                    {%else%}
+                                                    <img src="/static/notif_img/{{item['img']}}" alt="post-title"/>
+                                                    {%endif%}
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <h5 class="post-title mb-0 mt-4"><a href="/notif/single/{{item['_id']}}"> {{item['title']}}  </a></h5>
+                                        <!-- <ul class="meta list-inline mt-2 mb-0">
+                                            <li class="list-inline-item"><a href="#">کاتن</a></li>
+                                            <li class="list-inline-item">30 اردیبهشت 1401</li>
+                                        </ul> -->
+                                        <p class="excerpt mb-0">
+                                            {% if item['text']|length > 70 %}
+                                            {{item['text'][:70]}}...
+                                            {%else%}
+                                            {{item['text'][:70]}}
+                                            {%endif%}
+                                            
+    
+                                        </p>
+                                    </div>
+                                {%endfor%}
+
+
+
+                                </div>
+                                <!-- carousel arrows -->
+                                <div class="slick-arrows-bot">
+                                    <button type="button" data-role="none"
+                                            class="carousel-botNav-prev slick-custom-buttons" aria-label="بعدی"><i
+                                            class="icon-arrow-right"></i></button>
+                                    <button type="button" data-role="none"
+                                            class="carousel-botNav-next slick-custom-buttons" aria-label="قبلی"><i
+                                            class="icon-arrow-left"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                       
+                        <!-- ثبت نام ها -->
+                        <div class="widget rounded">
+                            <div class="widget-header text-center">
+                                <h3 class="widget-title">ثبت نام</h3>
+                                <img src="../../static/theme/images/wave.svg" class="wave" alt="wave"/>
+                            </div>
+                            <div class="widget-content">
+                                <!-- post -->
+                            {%for sinup in sinup_show_list %}
+                                <div class="post post-list-sm circle">
+                                    <div class="thumb circle">
+                                        <span class="number">{{sinup['moavenat']}}</span>
+                                        <a href="/sinup/insert/{{sinup['_id']}}">
+                                            <div class="inner">
+                                                <img src="../../static/theme/images/posts/tabs-3.jpg" alt="post-title"/>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="details clearfix">
+                                        <h6 class="post-title my-0"><a href="/sinup/insert/{{sinup['_id']}}">{{sinup["name"]}}</a></h6>
+                                        <!-- <ul class="meta list-inline mt-1 mb-0">
+                                            <li class="list-inline-item">30 اردیبهشت 1401</li>
+                                        </ul> -->
+                                    </div>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+
+                        
+                         <!--نظر سنجی -->
+                        <div class="widget rounded">
+                            <div class="widget-header text-center">
+                                <h3 class="widget-title">نظر سنجی</h3>
+                                <img src="../../static/theme/images/wave.svg" class="wave" alt="wave"/>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="list">
+                                    {%for surv in survay_show_list %}
+                                    <li><a href="/sinup/insert/{{surv['_id']}}">{{surv["name"]}}</a><span>({{surv["moavenat"]}})</span></li>
+                                    {%endfor%}
+                                    
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <!-- لینک های مهم -->
+                        <div class="widget rounded">
+                            <div class="widget-header text-center">
+                                <h3 class="widget-title">لینک های مهم</h3>
+                                <img src="/static/theme/images/wave.svg" class="wave" alt="wave"/>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="list">
+                                    <li><a href="file://p395/portal/tel/TELJ.pdf">آیفون استان ها</a><span>(1)</span></li>
+                                    <li><a href="">تلفن های عمومی</a><span>(2)</span></li>
+                                    <li><a href="http://sql:55/c.aspx">شماره تماس همکاران</a><span>(3)</span></li>
+                                    <li><a href="file://p395.d955.net/portal/tel/tel2.htm">شماره تلفن مراکز استان وزارت</a><span>(4)</span></li>
+                                    <li><a href="http://est/c.aspx">کد کشورها</a><span>(5)</span></li>
+                                    <li><a href="file://p395.d955.net/portal/tel/pish%20shomare.docx">کد شهرها</a><span>(6)</span></li>
+                                    <li><a href="http://p395/amozesh/Documents/Sazman%20Tehran.pdf">شماره تلفن سازمان اطلاعات تهران</a><span>(7)</span></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                        <!-- برچسب های آگهی -->
+                        <div class="widget rounded">
+                            <div class="widget-header text-center">
+                                <h3 class="widget-title">برچسب های آگهی</h3>
+                                <img src="../../static/theme/images/wave.svg" class="wave" alt="wave"/>
+                            </div>
+                            <div class="widget-content">
+                                {%for tag in tag_list %}
+                                <a href="/post/index/tag/{{tag}}/1" class="tag">#{{tag}}</a>
+                                {%endfor%}
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+			</div>
+
+		</div>
+	</section>
+
+	<!-- instagram feed -->
+	<div class="instagram">
+        <div class="container-xl">
+            <!-- button -->
+            <a href="/post/index/all/1" class="btn btn-default btn-instagram">صفحه آگهی</a>
+            <!-- images -->
+            <div class="instagram-feed d-flex flex-wrap">
+                <div class="insta-item col-sm-2 col-6 col-md-2">
+                    <a href="#">
+                        <img src="../../static/theme/images/insta/insta-1.jpg" alt="insta-title"/>
+                    </a>
+                </div>
+                <div class="insta-item col-sm-2 col-6 col-md-2">
+                    <a href="#">
+                        <img src="../../static/theme/images/insta/insta-2.jpg" alt="insta-title"/>
+                    </a>
+                </div>
+                <div class="insta-item col-sm-2 col-6 col-md-2">
+                    <a href="#">
+                        <img src="../../static/theme/images/insta/insta-3.jpg" alt="insta-title"/>
+                    </a>
+                </div>
+                <div class="insta-item col-sm-2 col-6 col-md-2">
+                    <a href="#">
+                        <img src="../../static/theme/images/insta/insta-4.jpg" alt="insta-title"/>
+                    </a>
+                </div>
+                <div class="insta-item col-sm-2 col-6 col-md-2">
+                    <a href="#">
+                        <img src="../../static/theme/images/insta/insta-1.jpg" alt="insta-title"/>
+                    </a>
+                </div>
+                <div class="insta-item col-sm-2 col-6 col-md-2">
+                    <a href="#">
+                        <img src="../../static/theme/images/insta/insta-6.jpg" alt="insta-title"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!-- footer -->
+	<footer>
+		<div class="container-xl">
+			<div class="footer-inner">
+				<div class="row d-flex align-items-center gy-4">
+					<!-- copyright text -->
+					<div class="col-md-4">
+						<span class="copyright">پورتال اطلاع رسانی <a href="/index">اداره کل </a></span>
+					</div>
+
+					<!-- social icons -->
+					<div class="col-md-4 text-center">
+						<ul class="social-icons list-unstyled list-inline mb-0">
+                            <li class="list-inline-item"><a href="http://sql:55/c.aspx" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="شماره تماس همکاران" ><i class="fa fa-address-book"></i></a></li>
+                            <li class="list-inline-item"><a href="https://www.ibank.net/Login" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="بانک امین" ><i class="fa fa-university"></i></a></li>
+                            <li class="list-inline-item"><a href="" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="لینکها" ><i class="fa fa-server"></i></a></li>
+                            <li class="list-inline-item"><a href="https://www.874.net/" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="صفحه من" ><i class="fa fa-id-card"></i></a></li>
+                            <li class="list-inline-item"><a href="https://www.agah.net/" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="آگاه" ><i class="fa fa-camera-retro"></i></a></li>
+                            <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li> -->
+                        </ul>
+					</div>
+
+					<!-- go to top button -->
+					<div class="col-md-4">
+						<a href="#" id="return-to-top" class="float-md-end"><i class="icon-arrow-up"></i>بازگشت به بالا</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</div><!-- end site wrapper -->
+
+<!-- search popup area -->
+<div class="search-popup">
+	<!-- close button -->
+	<button type="button" class="btn-close" aria-label="Close"></button>
+	<!-- content -->
+	<div class="search-content">
+		<div class="text-center">
+			<h3 class="mb-4 mt-0">ESC را فشار دهید تا بسته شود</h3>
+		</div>
+		<!-- form -->
+		<form method="post" action="/search/notif" class="d-flex search-form">
+            <input class="form-control me-2" type="search" name="data" placeholder="جستجو کنید و اینتر را فشار دهید ..."
+                   aria-label="Search">
+            <button class="btn btn-default btn-lg" type="submit"><i class="icon-magnifier"></i></button>
+        </form>
+	</div>
+</div>
+
+<!-- canvas menu -->
+<div class="canvas-menu d-flex align-items-end flex-column">
+	<!-- close button -->
+	<button type="button" class="btn-close" aria-label="Close"></button>
+
+	<!-- logo -->
+	<div class="logo">
+		<a class="navbar-brand" href="/index">پورتال </a>
+	</div>
+
+	<!-- menu -->
+	<nav>
+		<ul class="vertical-menu">
+			<li class="active">
+				<a href="index.html">معاونت ها</a>
+				<ul class="submenu">
+					<li><a href="/notif/0">اداره کل</a></li>
+
+                    {%for mo in moavenats %}
+                    <li><a href="/notif/{{mo}}">{{mo}}</a></li>
+                    {%endfor%}
+				</ul>
+			</li>
+
+			<li>
+				<a href="/post/index/all/1">آگهی</a>
+				<ul class="submenu">
+					<li><a href="/post/index/all/1">آگهی ها</a></li>
+                    <li><a href="/post/index/username/{{user['username']}}/1">آگهی های من</a></li>
+                    <li><a href="/post/create">نوشتن آگهی</a></li>
+
+				</ul>
+			</li>
+			<li><a href="/form/archive/index/all/all/1">فرم ها</a></li>
+			<li><a href="">لینک ها</a></li>
+			<li><a href="about.html">درباره ما</a></li>
+		</ul>
+	</nav>
+
+	<!-- social icons -->
+	<ul class="social-icons list-unstyled list-inline mb-0">
+        <li class="list-inline-item"><a href="http://sql:55/c.aspx" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="شماره تماس همکاران" ><i class="fa fa-address-book"></i></a></li>
+        <li class="list-inline-item"><a href="https://www.ibank.net/Login" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="بانک امین" ><i class="fa fa-university"></i></a></li>
+        <li class="list-inline-item"><a href="" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="لینکها" ><i class="fa fa-server"></i></a></li>
+        <li class="list-inline-item"><a href="https://www.874.net/" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="صفحه من" ><i class="fa fa-id-card"></i></a></li>
+        <li class="list-inline-item"><a href="https://www.agah.net/" data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="آگاه" ><i class="fa fa-camera-retro"></i></a></li>
+        <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li> -->
+    </ul>
+</div>
+
+<!-- JAVA SCRIPTS -->
+<script src="../../static/theme/js/jquery.min.js"></script>
+<script src="../../static/theme/js/popper.min.js"></script>
+<script src="../../static/theme/js/bootstrap.min.js"></script>
+<script src="../../static/theme/js/slick.min.js"></script>
+<script src="../../static/theme/js/jquery.sticky-sidebar.min.js"></script>
+<script src="../../static/theme/js/custom.js"></script>
+
+</body>
+
+</html>

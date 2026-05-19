@@ -1,0 +1,67 @@
+
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>login public</title>
+	<link rel="stylesheet" href="../static/login/style.css">
+  <link rel="stylesheet" href="../static/alert/style.css">
+	<link rel="stylesheet" type="text/css" href="slide navbar style.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body dir="rtl" style="background-color: wheat !important;">
+	
+
+	<div class="main"> 
+
+		{%if status=="false" %} 	
+		<div class="alert">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			<strong>هشدار!</strong> نام کاربری یا کلمه عبور اشتباه است.
+		</div>
+		{%endif%}
+
+		{%if status=="duplicate" %} 	
+		<div class="alert">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			<strong>اخطار!</strong> این شماره قبلا استفاده شده است.
+		</div>
+		{%endif%}
+
+		
+		{%if status=="badreq" %} 	
+		<div class="alert">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+			<strong>هشدار!</strong>خطا در اتصال به Api.
+		</div>
+		{%endif%}
+
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+		<div class="signup">
+			<form action="/login/public" method="post">
+				
+				
+				<form accept="/login" method="post">
+					<label for="chk" aria-hidden="true">ورود</label>
+					<div style="text-align: center;padding-right: 10px;padding-left: 10px;padding-bottom: 10px;">
+					<h3 style="color: white;">نام کاربری و رمز عبور ویندوز خود را وارد کند</h3>
+					</div>
+					<input type="text" name="username" placeholder="نام کاریری" required="">
+					<input type="password" name="password" placeholder="کلمه عبور" required="">
+					<button>ورود</button>
+				</form>
+				
+				
+			</form>
+		</div>
+
+			
+	</div>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>

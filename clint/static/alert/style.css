@@ -1,0 +1,31 @@
+
+.alert {
+  padding: 20px;
+  background-color: #d60b0bb5;
+  color: white;
+  border: 2px solid rgb(251, 247, 247);
+  border-radius: 25px;
+}
+
+.alert_siccecs {
+  padding: 20px;
+  background-color: #0bd66db5;
+  color: white;
+  border: 2px solid rgb(251, 247, 247);
+  border-radius: 25px;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
