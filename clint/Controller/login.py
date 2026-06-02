@@ -19,8 +19,7 @@ import jwt
 from typing import Optional
 from fastapi.responses import JSONResponse,HTMLResponse
 from fastapi.security import HTTPBearer
-# from ldap3 import Server, Connection, ALL, NTLM
-# import win32security
+
 
 
 # ایجاد یک router جدید

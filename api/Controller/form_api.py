@@ -9,7 +9,8 @@ from fastapi.responses import JSONResponse
 import datetime
 import jwt
 import jdatetime
-
+from fastapi import Depends
+from core.database import get_db
 # کلید مخفی برای ارسال نام کاربری در هدر درخواست ها
 SECRET_KEY_USERNAME = "0041e6ad98c3ae252d"
 ALGORITHM_USERNAME = "HS256"
@@ -22,13 +23,22 @@ router = APIRouter()
 # اتصال به MongoDB
 # client = AsyncIOMotorClient('mongodb://localhost:27017')
 # db = client.portal
-db = request.app.state.db
-form_collection = db.get_collection("form_archive")
-form_archive_collection = db.get_collection("form_archive_archive")
-form_edited_collection = db.get_collection("form_archive_edited")
-# form_comment_collectiom=db.get_collection("form_comment")
-# active_collection = db.get_collection("active_session")
-log_collection = db.get_collection("log")
+# db = request.app.state.db
+# form_collection = db.get_collection("form_archive")
+# form_archive_collection = db.get_collection("form_archive_archive")
+# form_edited_collection = db.get_collection("form_archive_edited")
+# # form_comment_collectiom=db.get_collection("form_comment")
+# # active_collection = db.get_collection("active_session")
+# log_collection = db.get_collection("log")
+
+
+def get_collections(db):
+    return (
+        db.form_archive,
+        db.form_archive_archive,
+        db.form_archive_edited,
+        db.log
+    )
 
 def convert_mongo_to_json(item):
     if isinstance(item, dict):
@@ -42,10 +52,11 @@ def fixid(user):
 
 @router.get("/form/index/{type_req}/{data}/{page}")
 @router.get("/form/index/{type_req}/{page}")
-async def index(Xtoken: str = Header(""),Ujtoken:str=Header(""),type_req:str="all",data:str="all",page:int=1):
+async def index(Xtoken: str = Header(""),Ujtoken:str=Header(""),type_req:str="all",data:str="all",page:int=1,db=Depends(get_db)):
     user_info_token = jwt.decode(Ujtoken, SECRET_KEY_USERNAME, algorithms=[ALGORITHM_USERNAME])
     user_info_token_username=user_info_token["username"]
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
+        form_collection, form_archive_collection, form_edited_collection, log_collection = get_collections(db)
         page=page-1
         if type_req =="all":
             forms= form_collection.find().sort("_id",-1).skip(page*10).limit(12)
@@ -72,7 +83,7 @@ async def form_count(type_req:str="all",data:str="all",Xtoken: str = Header(""),
     user_info_token = jwt.decode(Ujtoken, SECRET_KEY_USERNAME, algorithms=[ALGORITHM_USERNAME])
     user_info_token_username=user_info_token["username"]
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
-
+        form_collection, form_archive_collection, form_edited_collection, log_collection = get_collections(db)
         if type_req == "all":
             count_form=await form_collection.count_documents({})
         else:
@@ -86,11 +97,11 @@ async def form_count(type_req:str="all",data:str="all",Xtoken: str = Header(""),
 
 
 @router.get("/form/archive/detail/{itemid}")
-async def detail(itemid:str,Xtoken: str = Header(""),Ujtoken:str=Header("")):
+async def detail(itemid:str,Xtoken: str = Header(""),Ujtoken:str=Header(""),db=Depends(get_db)):
     user_info_token = jwt.decode(Ujtoken, SECRET_KEY_USERNAME, algorithms=[ALGORITHM_USERNAME])
     user_info_token_username=user_info_token["username"]
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
-        # print("id -*+*+-*-*-*-*-*-*-++++*",itemid)
+        form_collection, form_archive_collection, form_edited_collection, log_collection = get_collections(db)
         id=ObjectId(itemid)
         form= await form_collection.find_one({"_id":id})
         # notifes_list = await notifes.to_list(length=None)
@@ -102,10 +113,11 @@ async def detail(itemid:str,Xtoken: str = Header(""),Ujtoken:str=Header("")):
 
 
 @router.post("/form/archive/create")
-async def create(form:Form.Form_insert,Xtoken: str = Header(""),Ujtoken:str=Header("")):
+async def create(form:Form.Form_insert,Xtoken: str = Header(""),Ujtoken:str=Header(""),db=Depends(get_db)):
     user_info_token = jwt.decode(Ujtoken, SECRET_KEY_USERNAME, algorithms=[ALGORITHM_USERNAME])
     user_info_token_username=user_info_token["username"]
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
+        form_collection, form_archive_collection, form_edited_collection, log_collection = get_collections(db)
         n_dict=form.dict()
         
 
@@ -123,11 +135,11 @@ async def create(form:Form.Form_insert,Xtoken: str = Header(""),Ujtoken:str=Head
         raise HTTPException(detail="bad requst",status_code=status.HTTP_400_BAD_REQUEST)
 
 @router.post("/form/edite")
-async def edite(form:Form.Form_complet,Xtoken: str = Header(""),Ujtoken:str=Header("")):
+async def edite(form:Form.Form_complet,Xtoken: str = Header(""),Ujtoken:str=Header(""),db=Depends(get_db)):
     user_info_token = jwt.decode(Ujtoken, SECRET_KEY_USERNAME, algorithms=[ALGORITHM_USERNAME])
     user_info_token_username=user_info_token["username"]
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
-
+        form_collection, form_archive_collection, form_edited_collection, log_collection = get_collections(db)
         old_item=await form_collection.find_one({"_id":ObjectId(form.id)})
         
         # print(notife)
@@ -156,10 +168,11 @@ async def edite(form:Form.Form_complet,Xtoken: str = Header(""),Ujtoken:str=Head
 
 
 @router.delete("/form/archive/delete/{itemid}")
-async def delete(itemid:str,Xtoken: str = Header(""),Ujtoken:str=Header("")):
+async def delete(itemid:str,Xtoken: str = Header(""),Ujtoken:str=Header(""),db=Depends(get_db)):
     user_info_token = jwt.decode(Ujtoken, SECRET_KEY_USERNAME, algorithms=[ALGORITHM_USERNAME])
     user_info_token_username=user_info_token["username"]
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
+        form_collection, form_archive_collection, form_edited_collection, log_collection = get_collections(db)
         id=ObjectId(itemid)
         old_item=await form_collection.find_one({"_id":id})
         form_collection.delete_one({"_id":id})

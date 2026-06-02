@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Header,HTTPException,status
+from fastapi import FastAPI,Header,HTTPException,status,Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
 from bson import ObjectId
@@ -7,16 +7,17 @@ from Model import User
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from fastapi import Request
+from core.database import get_db
 
 # ایجاد یک router جدید
 router = APIRouter()
 
 # اتصال به MongoDB
-# client = AsyncIOMotorClient('mongodb://localhost:27017')
-# db = client.portal
-db = request.app.state.db
-User_collection = db.get_collection("Users")
-active_collection = db.get_collection("active_session")
+def get_collections(db):
+    return (
+        db.get_collection("Users"),
+        db.get_collection("active_session")
+    )
 
 def convert_mongo_to_json(item):
     if isinstance(item, dict):
@@ -27,9 +28,9 @@ def fixid(user):
     return user
 
 @router.post("/login")
-async def login(user:User.User_login,Xtoken: str = Header("")):
+async def login(user:User.User_login,Xtoken: str = Header(""),db=Depends(get_db)):
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
-        # print(user)
+        User_collection, active_collection = get_collections(db)
         users=User_collection.find({"username":user.username})
         users_list = await users.to_list(length=None)
         # print ("+++++++++++++++++++")
@@ -48,8 +49,9 @@ async def login(user:User.User_login,Xtoken: str = Header("")):
 
 
 @router.post("/insert_active_session")
-async def insert_active_session(user:User.Active_session,Xtoken: str = Header("")):
+async def insert_active_session(user:User.Active_session,Xtoken: str = Header(""),db=Depends(get_db)):
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
+        User_collection, active_collection = get_collections(db)
         await active_collection.delete_many({"username":user.username})
         user_dict=user.dict()
         await active_collection.insert_one(user_dict)
@@ -60,16 +62,18 @@ async def insert_active_session(user:User.Active_session,Xtoken: str = Header(""
 
 
 @router.post("/remove_active_session")
-async def remove_active_session(user:User.Active_session,Xtoken: str = Header("")):
+async def remove_active_session(user:User.Active_session,Xtoken: str = Header(""),db=Depends(get_db)):
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
+        User_collection, active_collection = get_collections(db)
         await active_collection.delete_many({"username":user.username,"token":user.token})
         raise HTTPException(detail="remove active session",status_code=status.HTTP_200_OK)
     else:
         raise HTTPException(detail="bad requst",status_code=status.HTTP_400_BAD_REQUEST)
 
 @router.post("/check_active_session")
-async def check_active_session(user:User.Active_session,Xtoken: str = Header("")):
+async def check_active_session(user:User.Active_session,Xtoken: str = Header(""),db=Depends(get_db)):
     if Xtoken=="0041e6ad98c3ae252dcca3f50e82fdf2d57a65fc":
+        User_collection, active_collection = get_collections(db)
         users= active_collection.find({"username":user.username,"token":user.token})
         users_list = await users.to_list(length=None)
         if len(users_list)!=0:
