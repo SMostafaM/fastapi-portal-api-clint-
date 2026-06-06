@@ -160,8 +160,8 @@ async def login(request:Request,response: Response,user: User.User_login=Form(""
 
 
 
-LDAP_SERVER = "ldap://172.95.2.70"  # ← آدرس IP دامین کنترلر
-DOMAIN = "D845.net"                      # ← نام NetBIOS دامنه (نه test.local، فقط TEST)
+LDAP_SERVER = "ldap://"  # ← آدرس IP دامین کنترلر
+DOMAIN = ""                      # ← نام NetBIOS دامنه (نه test.local، فقط TEST)
 
 
 @router.get("/login/public",response_class=HTMLResponse)
